@@ -1,0 +1,137 @@
+openapi: 3.0.0
+info:
+  title: Blogging Application
+  description: Blogging Application using Swagger
+  version: 1.0.0
+
+servers:
+  - url: http://localhost:9000
+    description: Local server
+
+paths:
+  /user/login:
+    get:
+      summary: Render EJS Login page
+      description: Renders an EJS template for the user
+      responses:
+        "200":
+          description: EJS page rendered successfully
+          content:
+            text/html:
+              schema:
+                type: string
+                example: "<!DOCTYPE html><html><head><title>My Page</title></head><body><h1>Hello, World!</h1></body></html>"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties: 
+                    error:
+                      type: string
+
+  /user/signin:
+    post:
+      summary: User login
+      description: Authenticates a user and sets a JWT token in a cookie
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                  example: s@gmail.com
+                password:
+                  type: string
+                  example: password#123
+      responses:
+        "200":
+          description: Login successful, JWT set in cookie
+          headers:
+            Set-Cookie:
+              description: JWT token set in cookie
+              schema:
+                type: string
+        "401":
+          description: Unauthorized - invalid credentials
+  /user/signup:
+    get:
+      summary: Render EJS signup page
+      description: Renders an EJS template for the user
+      responses:
+        "200":
+          description: EJS page rendered successfully
+          content:
+            text/html:
+              schema:
+                type: string
+                example: "<!DOCTYPE html><html><head><title>My Page</title></head><body><h1>Hello, World!</h1></body></html>"
+        "500":
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties: 
+                    error:
+                      type: string
+  /user/signup:
+    post:
+      summary: User SignUp
+      description: creation of user
+      requestBody:
+        required: true
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                fullName:
+                  type: string
+                  example: sai
+                email:
+                  type: string
+                  example: s@gmail.com
+                password:
+                  type: string
+                  example: password#123
+      responses:
+        "200":
+          description: Signup successful, user created
+        "500":
+          description: Server Error
+  /protected:
+    get:
+      summary: Protected route
+      description: Access a protected route with JWT in cookie
+      security:
+        - cookieAuth: []
+      responses:
+        "200":
+          description: Successfully accessed protected resource
+        "401":
+          description: Unauthorized - invalid or missing token
+
+  /logout:
+    post:
+      summary: User logout
+      description: Clears the JWT cookie
+      responses:
+        "200":
+          description: Successfully logged out, cookie cleared
+
+components:
+  securitySchemes:
+    cookieAuth:
+      type: apiKey
+      in: cookie
+      name: jwt
+      description: JWT token stored in a cookie for authentication

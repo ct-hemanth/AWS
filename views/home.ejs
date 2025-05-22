@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('./partials/head') %>
+    <style>
+        .blog-card {
+            /* Increased height and width */
+            min-height: 300px; /* Adjust as needed */
+        }
+    
+        .blog-image {
+            max-height: 400px; /* Adjust as needed */
+            object-fit: cover; /* or contain, depending on your preference */
+        }
+    
+        .card-title {
+            font-size: 1.5rem; /* Adjust as needed */
+        }
+    
+        .btn-lg {
+            font-size: 1.2rem; /* Adjust as needed */
+            padding: 0.75rem 1.5rem; /* Adjust as needed */
+        }
+    </style>
+</head>
+<body>
+    <%- include('./partials/nav') %>
+    <% if (!locals.user) { %>
+<div class="container mt-3" > 
+    <div class="image-slider">
+        <div class="slide-track">
+            <% for(let i = 1; i <= 4; i++) { %>  <div class="slide">
+                    <img src="/images/image<%= i %>.jpg" alt="Blog Image <%= i %>">  </div>
+            <% } %>
+             <% for(let i = 1; i <= 5; i++) { %>  <div class="slide">
+                    <img src="/images/image<%= i %>.jpg" alt="Blog Image <%= i %>">  </div>
+            <% } %>
+        </div>
+    </div>
+</div>
+    <div class="container blog-content"  >
+        <h1>Welcome to My Blog</h1>
+
+        <section id="travel">
+            <h2>Travel</h2>
+            <p>This section is dedicated to my travel experiences and adventures. I love exploring new places, cultures, and cuisines.  From backpacking through Southeast Asia to road trips across my own country, I'll share my stories, tips, and recommendations for your next journey.  Stay tuned for posts about hidden gems, must-see attractions, and budget travel hacks.</p>
+            <img src="/images/travel.jpg" alt="Travel Image" class="innerImages">  </section>
+            <br>
+            <br>    
+        <section id="food">
+            <h2>Food</h2>
+            <p>Food is an integral part of any travel experience.  I'm a big foodie, always eager to try local delicacies and learn about different culinary traditions. Here, I'll document my food adventures, from street food stalls to Michelin-starred restaurants. Expect mouthwatering photos, recipes, and restaurant reviews.</p>
+            <img src="/images/food.jpg" alt="Food Image" class="innerImages"> </section>
+            <br>
+            <br>
+        <section id="nature">
+            <h2>Nature</h2>
+            <p>I'm passionate about preserving our planet's natural beauty.  This section will showcase the wonders of nature, from lush forests to majestic mountains, and discuss the importance of conservation.  I'll share my experiences hiking, wildlife spotting, and exploring national parks, inspiring you to connect with nature and protect it.</p>
+            <img src="/images/climate.jpg" alt="Nature Image" class="innerImages"> </section>
+            <br>
+            <br>
+    </div>
+    <% }else{ %>
+        <div class="container mt-4">
+            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 row-cols-xl-4 g-4">
+                <% blogs.forEach(blog => { %>
+                    <div class="col">
+                        <div class="card h-100 shadow blog-card">  <% if (blog.blogImageUrl) { %>
+                                <img src="<%= blog.blogImageUrl %>" class="card-img-top img-fluid blog-image" alt="<%= blog.title %>">
+                            <% } %>
+                            <div class="card-body">
+                                <h4 class="card-title"><%= blog.title %></h4>  </div>
+                            <div class="card-footer">
+                                <a href="/blogs/<%= blog._id %>" class="btn btn-primary btn-lg">View</a> </div>
+                        </div>
+                    </div>
+                <% }); %>
+        
+                <% if (blogs.length === 0) { %>
+                    <div class="col">
+                        <p class="text-center">No blogs yet.</p>
+                    </div>
+                <% } %>
+            </div>
+        </div>
+    <% } %>
+    <%- include('./partials/script') %>
+</body>
+</html>

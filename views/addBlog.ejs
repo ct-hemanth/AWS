@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('./partials/head') %>
+    <style>
+                #blogContent {
+            font-family: 'Arial', sans-serif; /* Default font */
+            resize: vertical; /* Allow vertical resizing only */
+        }
+        .container {
+            max-width: 900px; /* Set a maximum width for the container */
+        }
+        .form-label {
+            font-weight: 500; /* Slightly bolder labels */
+        }
+
+        .btn-primary {
+            background-color: #007bff; /* Use a custom primary color */
+            border-color: #007bff;
+        }
+
+        .btn-primary:hover {
+            background-color: #0069d9;
+            border-color: #0062cc;
+        }
+    </style>
+</head>
+<body>
+    <%- include('./partials/nav') %>
+    <div class="container mt-4">
+        <div class="card shadow"> <div class="card-body p-4">
+                <h2 class="card-title text-center mb-4">Add New Blog</h2>
+                <form action="/blogs" method="POST" enctype="multipart/form-data">
+                    <div class="mb-3">
+                        <label for="title" class="form-label">Title</label>
+                        <input type="text" class="form-control" id="title" name="title" required>
+                    </div>
+                    <div class="mb-3">
+                        <label for="image" class="form-label">Image</label>
+                        <input class="form-control" type="file" id="image" name="coverImage">
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="font" class="form-label">Font</label>
+                        <select class="form-select" id="font" name="font" onchange="changeFont()">
+                            <option value="Arial">Arial</option>
+                            <option value="Verdana">Verdana</option>
+                            <option value="Georgia">Georgia</option>
+                            <option value="Courier New">Courier New</option>
+                            <option value="Times New Roman">Times New Roman</option>
+                        </select>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="blogContent" class="form-label">Content</label>
+                        <textarea class="form-control" id="blogContent" name="body" rows="12" required></textarea>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function changeFont() {
+            const selectedFont = document.getElementById("font").value;
+            document.getElementById("blogContent").style.fontFamily = selectedFont;
+        }
+    </script>
+    <%- include('./partials/script') %>
+</body>
+</html>

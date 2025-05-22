@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Blog Post</title>
+    <%- include('./partials/head') %>
+    <style>
+        .blog-image {
+            max-width: 100%; /* Image takes full width of container */
+            height: auto; /* Maintain aspect ratio */
+            display: block; /* Prevents small gap below image */
+            margin: 2rem auto; /* Center the image */
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+        }
+
+        .blog-content pre {
+            white-space: pre-wrap; /* Allow text to wrap */
+            word-wrap: break-word; /* Older browser compatibility */
+            background-color: #f8f9fa; /* Light background for pre */
+            padding: 1.5rem; /* Add padding */
+            border-radius: 8px; /* Rounded corners */
+            overflow-x: auto; /* Add horizontal scroll if needed */
+            font-size: 1.1rem; /* Slightly larger font size for readability */
+            line-height: 1.6; /* Improved line height */
+        }
+
+        .blog-title {
+            font-weight: bold;
+            margin-bottom: 1rem;
+        }
+
+        .blog-container {
+            max-width: 1100px; /* Set a reasonable max width */
+            margin: 2rem auto; /* Center the container */
+            padding: 2rem;
+        }
+
+        .blog-meta {
+            color: #6c757d; /* Muted color for meta info */
+            margin-bottom: 1rem;
+        }
+    </style>
+</head>
+<body>
+    <%- include('./partials/nav') %>
+    <div class="container blog-container">
+        <div class="card shadow">
+            <div class="card-body">
+                <% if (blog.blogImageUrl) { %>
+                    <img src="<%= blog.blogImageUrl %>" alt="<%= blog.title %>" class="blog-image">
+                <% } %>
+
+                <h2 class="blog-title text-center"><%= blog.title %></h2>
+                <p class="blog-meta text-center">
+                    <i class="fas fa-calendar-alt me-1"></i> Posted by      :<%= user.name%> 
+                    <img src="<%= user.profileImageURL %>" alt="Profile" class="rounded-circle" width="30" height="30">
+                </p>
+
+                <pre style="font-family: '<%= blog.font %>'"><%- blog.body %></pre>
+
+            </div>
+
+        </div>
+    </div>
+
+
+    <script>
+        // function formatDate(dateString) {
+        //     const date = new Date(dateString);
+        //     const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        //     return date.toLocaleDateString(undefined, options);
+        // }
+
+    </script>
+    <script src="https://kit.fontawesome.com/your-font-awesome-kit.js" crossorigin="anonymous"></script>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
