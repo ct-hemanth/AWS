@@ -2,8 +2,6 @@ const cookieParser = require('cookie-parser')
 const express = require('express')
 const mongoose = require('mongoose')
 const path =require('path')
-const swaggerUi = require('swagger-ui-express');
-const YAML = require('yamljs');
 const {
      checkForAuthenticationCookie,
    } = require("./middlewares/authentication");
@@ -13,7 +11,7 @@ const {
    const Blog =require("./models/blog")
 const app = express()
 const port = process.env.PORT || 9000;
-const swaggerDocument = YAML.load(path.join(__dirname, 'swagger.yaml'));
+
 mongoose.connect(process.env.MONGO_URI ||"mongodb+srv://saihemanth0808:Gandeev%4012@cluster0.z8autbn.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0").then(()=>console.log('mongodb connected')).catch(()=>console.log('mongodb not connected'))
 
 app.set("view engine", "ejs");
@@ -27,7 +25,7 @@ app.use(cookieParser());
 app.use(express.json())
 
 
-app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
 app.use(checkForAuthenticationCookie("token"));
 
 app.get("/", async (req,res,next)=>{
