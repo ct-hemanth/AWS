@@ -23,6 +23,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 //middelwares
 app.use(express.urlencoded({extended:false}))
 app.use(cookieParser());
+
 app.use(express.json())
 
 
